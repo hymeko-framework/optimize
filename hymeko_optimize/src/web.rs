@@ -12,8 +12,8 @@
 use wasm_bindgen::prelude::*;
 
 use hymeko::module_store::module_store::ModuleStore;
+use hymeko::module_store::source_provider::MemProvider;
 use hymeko::util::real_parser::RealParser;
-use hymeko_sources::MemoryProvider;
 
 use crate::backend::{AugmentedLagrangian, multistart};
 use crate::read::project;
@@ -35,9 +35,9 @@ pub fn solve(
     if paths.len() != texts.len() {
         return Err(JsValue::from_str("paths and texts must be the same length"));
     }
-    let mut provider = MemoryProvider::new();
+    let mut provider = MemProvider::default();
     for (path, text) in paths.iter().zip(&texts) {
-        provider.insert(path, text);
+        provider.insert_file(path.as_str(), text.as_str());
     }
 
     let mut store = ModuleStore::new(provider, RealParser);
@@ -95,9 +95,9 @@ pub fn solve(
 /// that wants to report a model that does not compile without pretending it has an answer.
 #[wasm_bindgen]
 pub fn describe(entry: String, paths: Vec<String>, texts: Vec<String>) -> Result<String, JsValue> {
-    let mut provider = MemoryProvider::new();
+    let mut provider = MemProvider::default();
     for (path, text) in paths.iter().zip(&texts) {
-        provider.insert(path, text);
+        provider.insert_file(path.as_str(), text.as_str());
     }
     let mut store = ModuleStore::new(provider, RealParser);
     let program = store
