@@ -63,7 +63,7 @@ fn truncated_hosvd_respects_its_a_priori_bound_and_reports_its_error() {
     let tucker = hosvd(TensorRef { shape: &shape, data: &t }, &ranks, &TuckerOptions::default()).unwrap();
     let norm = frobenius(&t);
     let explicit = difference(&tucker.reconstruct(), &t) / norm;
-    assert!(explicit <= tucker.error_bound(norm) + 1e-12);
+    assert!(explicit <= tucker.error_bound + 1e-12);
     assert!((tucker.relative_error - explicit).abs() <= 1e-7);
 }
 
@@ -80,6 +80,10 @@ fn hooi_never_does_worse_than_its_hosvd_start_and_its_history_is_monotone() {
     assert!(refined.history.windows(2).all(|w| w[1] <= w[0] + 1e-12), "{:?}", refined.history);
     let error = |tucker: &hymeko_decompose::Tucker| difference(&tucker.reconstruct(), &t);
     assert!(error(&refined) <= error(&start) + 1e-12);
+    // The a-priori bound is HOSVD's and survives HOOI unchanged; both errors respect it.
+    assert_eq!(refined.error_bound, start.error_bound);
+    let norm = frobenius(&t);
+    assert!(error(&start) / norm <= start.error_bound + 1e-12 && error(&refined) / norm <= refined.error_bound + 1e-12);
 }
 
 #[test]

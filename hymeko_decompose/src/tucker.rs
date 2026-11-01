@@ -69,6 +69,10 @@ pub struct Tucker {
     pub relative_error: f64,
     /// Relative error after the HOSVD start and after every HOOI sweep (one entry for HOSVD).
     pub history: Vec<f64>,
+    /// The HOSVD a-priori bound `√(Σₙ Σ_{i>Rₙ} σᵢ⁽ⁿ⁾²) / ‖T‖`, from the spectra of the unfoldings
+    /// of `T` itself. Fixed at HOSVD time and carried through HOOI, which only improves on it; it
+    /// cannot be recomputed from `factors` after HOOI, whose spectra are of projected unfoldings.
+    pub error_bound: f64,
     /// Jacobi evidence of the last factor computation of each mode.
     pub convergence: Vec<Convergence>,
 }
@@ -83,12 +87,6 @@ impl Tucker {
             shape[mode] = factor.rows;
         }
         data
-    }
-
-    /// The HOSVD a-priori bound `√(Σₙ Σ_{i>Rₙ} σᵢ⁽ⁿ⁾²) / ‖T‖` (holds for HOSVD; HOOI only improves on it).
-    pub fn error_bound(&self, norm: f64) -> f64 {
-        let discarded: f64 = self.factors.iter().map(|f| f.spectrum.iter().skip(f.rank).map(|s| s * s).sum::<f64>()).sum();
-        if norm == 0.0 { 0.0 } else { discarded.sqrt() / norm }
     }
 }
 
@@ -146,6 +144,8 @@ pub fn hosvd(t: TensorRef<'_>, ranks: &[usize], options: &TuckerOptions) -> Resu
     let (core, core_shape) = project_all(t.data, t.shape, &bases, &modes);
     let norm = norm2(t.data);
     let relative_error = relative_error(norm, &core);
+    let discarded: f64 = spectra.iter().zip(ranks).map(|(s, &r)| s.iter().skip(r).map(|x| x * x).sum::<f64>()).sum();
+    let error_bound = if norm == 0.0 { 0.0 } else { discarded.sqrt() / norm };
     Ok(Tucker {
         shape: t.shape.to_vec(),
         core_shape,
@@ -153,6 +153,7 @@ pub fn hosvd(t: TensorRef<'_>, ranks: &[usize], options: &TuckerOptions) -> Resu
         factors: bases.iter().zip(spectra).map(|(b, s)| factor_of(b, s)).collect(),
         relative_error,
         history: vec![relative_error],
+        error_bound,
         convergence,
     })
 }
