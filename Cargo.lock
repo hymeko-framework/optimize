@@ -272,6 +272,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "hymeko_decompose"
+version = "0.1.0"
+
+[[package]]
 name = "hymeko_optimize"
 version = "0.1.0"
 dependencies = [

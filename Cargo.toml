@@ -1,5 +1,5 @@
 [workspace]
-members = ["hymeko_optimize"]
+members = ["hymeko_optimize", "hymeko_decompose"]
 resolver = "3"
 
 # The same published revisions transformation pins, so a consumer of both resolves one crate
