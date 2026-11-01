@@ -1,0 +1,15 @@
+[workspace]
+members = ["hymeko_optimize"]
+resolver = "3"
+
+# The same published revisions transformation pins, so a consumer of both resolves one crate
+# identity per dependency.
+[workspace.dependencies]
+hymeko_core = { git = "ssh://git@192.168.1.228:2222/hymeko/core.git", rev = "9f533ca8f9cd39806d8db9a0a68cda7932c81ae2" }
+# Forward-mode duals and the constrained solver (hymeko_tensor::{dual, optimize}).
+hymeko_tensor = { git = "ssh://git@192.168.1.228:2222/hymeko/tensor.git", rev = "6769dabc70587356b2a6542faa336de152f382c4" }
+# The in-memory SourceProvider for the browser surface; it belongs beside Core's StdFsProvider and
+# is consumed from transformation until it moves there.
+hymeko_sources = { git = "ssh://git@192.168.1.228:2222/hymeko/transformation.git", rev = "209dee965d75ba33559e21b689ce72714a0669f2" }
+# Tests only: the query engine the projection's authority checks use.
+hymeko_query = { git = "ssh://git@192.168.1.228:2222/hymeko/transformation.git", rev = "209dee965d75ba33559e21b689ce72714a0669f2" }
