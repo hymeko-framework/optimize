@@ -281,7 +281,6 @@ version = "0.1.0"
 dependencies = [
  "hymeko_core",
  "hymeko_query",
- "hymeko_sources",
  "hymeko_tensor 0.1.0 (git+ssh://git@192.168.1.228:2222/hymeko/tensor.git?rev=6769dabc70587356b2a6542faa336de152f382c4)",
  "wasm-bindgen",
 ]
@@ -293,14 +292,6 @@ source = "git+ssh://git@192.168.1.228:2222/hymeko/transformation.git?rev=209dee9
 dependencies = [
  "hymeko_core",
  "parser",
-]
-
-[[package]]
-name = "hymeko_sources"
-version = "0.1.0"
-source = "git+ssh://git@192.168.1.228:2222/hymeko/transformation.git?rev=209dee965d75ba33559e21b689ce72714a0669f2#209dee965d75ba33559e21b689ce72714a0669f2"
-dependencies = [
- "hymeko_core",
 ]
 
 [[package]]
