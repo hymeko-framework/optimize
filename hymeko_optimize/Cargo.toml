@@ -3,7 +3,7 @@ name = "hymeko_optimize"
 version = "0.1.0"
 edition = "2024"
 description = "IR to solver-neutral constrained-optimisation problem: the typed projection"
-license = "MIT OR Apache-2.0"
+license = "MIT"
 
 # cdylib so a wasm target produces a module; rlib for every other consumer.
 [lib]

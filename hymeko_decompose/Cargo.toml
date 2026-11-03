@@ -3,7 +3,7 @@ name = "hymeko_decompose"
 version = "0.1.0"
 edition = "2024"
 description = "Dense matrix and tensor decompositions: QR-preconditioned one-sided Jacobi SVD, HOSVD/HOOI, least squares"
-license = "MIT OR Apache-2.0"
+license = "MIT"
 
 # No dependencies by design (user decision 2026-11-01: an own one-sided Jacobi kernel). Parallel HOSVD
 # modes use std::thread::scope only.
