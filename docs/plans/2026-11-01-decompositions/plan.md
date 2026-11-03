@@ -1,7 +1,13 @@
 # SVD, HOSVD and linear regression — plan and API templates
 
-Status: PLAN ONLY (user, 2026-11-01: "egyelőre csak tervek és sablonok"). No implementation, no
-dependency change and no CORE.YAML edit is authorised by this document.
+Status: IMPLEMENTED in `hymeko_decompose` (2026-11-01). The user decided the open questions below:
+owner = this repository (a `hymeko_decompose` crate, not Tensor's `linalg`); kernel = own one-sided
+Jacobi, no dependency; batch least squares included (Nagare's online RLS untouched). The user then
+asked for an optimised implementation: QR-preconditioned Jacobi, O(1) norm updates, block
+round-robin parallel sweeps, Gram-free HOSVD factors and parallel modes. The original plan text is
+kept below as the record of what was decided.
+
+Originally: PLAN ONLY (user, 2026-11-01: "egyelőre csak tervek és sablonok").
 
 ## What is wanted
 
