@@ -8,5 +8,8 @@ resolver = "3"
 hymeko_core = { git = "ssh://git@192.168.1.228:2222/hymeko/core.git", rev = "9f533ca8f9cd39806d8db9a0a68cda7932c81ae2" }
 # Forward-mode duals and the constrained solver (hymeko_tensor::{dual, optimize}).
 hymeko_tensor = { git = "ssh://git@192.168.1.228:2222/hymeko/tensor.git", rev = "6769dabc70587356b2a6542faa336de152f382c4" }
+# Tests only: the dynamical reading of the divider, so the Kirchhoff-limit check can compare the
+# network solve with the settled port-Hamiltonian trajectory.
+kawakern_dynamics = { git = "ssh://git@192.168.1.228:2222/hymeko/kawakern.git", rev = "a80e4290822e0e1e6e596e766f3a720e59257a0f" }
 # Tests only: the query engine the projection's authority checks use.
 hymeko_query = { git = "ssh://git@192.168.1.228:2222/hymeko/transformation.git", rev = "209dee965d75ba33559e21b689ce72714a0669f2" }
