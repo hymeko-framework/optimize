@@ -27,3 +27,4 @@ wasm-bindgen = { version = "0.2.127", optional = true }
 
 [dev-dependencies]
 hymeko_query = { workspace = true }
+kawakern_dynamics = { workspace = true }
