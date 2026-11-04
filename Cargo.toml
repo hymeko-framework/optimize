@@ -2,14 +2,14 @@
 members = ["hymeko_optimize", "hymeko_decompose"]
 resolver = "3"
 
-# The same published revisions transformation pins, so a consumer of both resolves one crate
-# identity per dependency.
+# The public revisions every framework consumer pins, so a workspace that uses several of them
+# resolves one crate identity per dependency.
 [workspace.dependencies]
-hymeko_core = { git = "ssh://git@192.168.1.228:2222/hymeko/core.git", rev = "9f533ca8f9cd39806d8db9a0a68cda7932c81ae2" }
+hymeko_core = { git = "https://github.com/hymeko-framework/core.git", rev = "957cf76a19989c077ee5a10b283f5382441b8f08" }
 # Forward-mode duals and the constrained solver (hymeko_tensor::{dual, optimize}).
-hymeko_tensor = { git = "ssh://git@192.168.1.228:2222/hymeko/tensor.git", rev = "6769dabc70587356b2a6542faa336de152f382c4" }
+hymeko_tensor = { git = "https://github.com/hymeko-framework/tensor.git", rev = "2b0c18523e977d36691af2738bb8f4feabd8dc4b" }
 # Tests only: the dynamical reading of the divider, so the Kirchhoff-limit check can compare the
 # network solve with the settled port-Hamiltonian trajectory.
-kawakern_dynamics = { git = "ssh://git@192.168.1.228:2222/hymeko/kawakern.git", rev = "a80e4290822e0e1e6e596e766f3a720e59257a0f" }
+kawakern_dynamics = { git = "https://github.com/hymeko-framework/kawakern.git", rev = "9f10d2a218813c121a14655fae01e5097a2c3e7e" }
 # Tests only: the query engine the projection's authority checks use.
-hymeko_query = { git = "ssh://git@192.168.1.228:2222/hymeko/transformation.git", rev = "209dee965d75ba33559e21b689ce72714a0669f2" }
+hymeko_query = { git = "https://github.com/hymeko-framework/transformation.git", rev = "cddcdfce55468188fca8f431ee45ce0e5fd348d5" }
